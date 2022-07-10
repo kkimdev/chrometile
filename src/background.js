@@ -207,10 +207,10 @@ function getDisplays() {
 function layoutWindow(display, windowIds, windowId, windowIndex, margin) {
     return new Promise(resolve => {
         console.log("layoutWindow", display.layout, windowIndex, windowIds.length, display.main_wins, display.area, margin, display.split_pct);
-        chrome.windows.update(windowId, LAYOUTS.get(display.layout)(
-            windowIndex, windowIds.length, display.main_wins,
-            display.area, margin, display.split_pct
-        ), win => resolve);
+        // chrome.windows.update(windowId, LAYOUTS.get(display.layout)(
+        //     windowIndex, windowIds.length, display.main_wins,
+        //     display.area, margin, display.split_pct
+        // ), win => resolve);
     });
 }
 
@@ -358,6 +358,30 @@ function changeWindowState(state) {
     });
 }
 
+async function place(positionNumber) {
+  w = await getFocused();
+  console.log(w);
+
+  let left = 0;
+  let top = 0;
+  let width = w.disp.area.width;
+  let height = w.disp.area.height;
+
+  if ([1,4,7,3,6,9].includes(positionNumber)) {
+    width = width / 2;
+  }
+  if ([3,6,9].includes(positionNumber)) {
+    left = width;
+  }
+  if ([7,8,9,1,2,3].includes(positionNumber)) {
+    height = height / 2;
+  }
+  if ([1,2,3].includes(positionNumber)) {
+    top = height;
+  }
+  chrome.windows.update(w.win.id, {'top': top, 'left': left, 'width': width, 'height': height});
+}
+
 // By default we set enabled true only for Chromebooks™, but this
 // can be overridden in the settings.tileWindows
 isChromebook().then(isCrOs => {
@@ -395,7 +419,16 @@ isChromebook().then(isCrOs => {
                     ["201-decrease-main-wins",          () => changeMainWins(Change.DECREASE) ],
                     ["300-next-layout",                 () => changeLayout(Change.INCREASE)   ],
                     ["301-prev-layout",                 () => changeLayout(Change.DECREASE)   ],
-                    ["900-reevaluate-wins",             () => tileWindows()                   ]
+                    ["900-reevaluate-wins",             () => tileWindows()                   ],
+                    ["99001-place-1",            () => place(1)                         ],
+                    ["99002-place-2",           () => place(2)                         ],
+                    ["99003-place-3",         () => place(3)                         ],
+                    ["99004-place-4",        () => place(4)                         ],
+                    ["99005-place-5",        () => place(5)                         ],
+                    ["99006-place-6",        () => place(6)                         ],
+                    ["99007-place-7",        () => place(7)                         ],
+                    ["99008-place-8",        () => place(8)                         ],
+                    ["99009-place-9",        () => place(9)                         ]
                 ]);
                 if (commands.has(command)) commands.get(command)();
             })

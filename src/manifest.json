@@ -40,6 +40,15 @@
     "201-decrease-main-wins":         { "description": "Decrease the number of windows in the main pane (Recommended: Alt+Shift+.)" },
     "300-next-layout":                { "description": "Cycle to next layout (Recommended: Alt+Shift+Space)" },
     "301-prev-layout":                { "description": "Cycle to previous layout (Recommended: Ctrl+Shift+Space)" },
-    "900-reevaluate-wins":            { "description": "Force windows to be reevaluated (Recommended: Alt+Shift+Z)" }
+    "900-reevaluate-wins":            { "description": "Force windows to be reevaluated (Recommended: Alt+Shift+Z)" },
+    "99001-place-1":           { "description": "1" },
+    "99002-place-2":           { "description": "2"},
+    "99003-place-3":         {"description": "3"},
+    "99004-place-4":        {"description": "4"},
+    "99005-place-5":        {"description": "5"},
+    "99006-place-6":        {"description": "6"},
+    "99007-place-7":        {"description": "7"},
+    "99008-place-8":        {"description": "8"},
+    "99009-place-9":        {"description": "9"}
   }
 }
