@@ -379,7 +379,7 @@ async function place(positionNumber) {
   if ([1,2,3].includes(positionNumber)) {
     top = height;
   }
-  chrome.windows.update(w.win.id, {'top': top, 'left': left, 'width': width, 'height': height});
+  chrome.windows.update(w.win.id, {'top': top, 'left': left, 'width': width, 'height': height, state: "normal"});
 }
 
 // By default we set enabled true only for Chromebooks™, but this
