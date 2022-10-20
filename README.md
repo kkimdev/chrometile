@@ -9,3 +9,6 @@ This design borrows heavily from the user interface of [Amethyst for OS-X](https
 
 ## Installation
 [Download from Chrome Webstore](https://chrome.google.com/webstore/detail/chrometile/aikaaejchodabfpkipfonnekofgepakh)
+
+# Packing for Chrome web store
+cd src && zip -r dist.zip ./
