@@ -148,6 +148,19 @@ function getDisplays() {
     });
 }
 
+function getDisplays2() {
+    allDisplays = new Array();
+    chrome.system.display.getInfo(displayInfo => {
+            console.log("Display Info", displayInfo);
+
+            if (displayInfo.length == 0)
+                reject("Zero displays");
+
+            displayInfo.forEach(d => allDisplays.push(new Display(d)));
+    });
+
+}
+
 function getFocused() {
     return new Promise(resolve => {
         chrome.windows.getLastFocused(WINTYPES, win => {
@@ -159,7 +172,7 @@ function getFocused() {
 }
 
 async function place(positionNumber) {
-  await getDisplays();
+  getDisplays2();
   w = await getFocused();
   console.log(w);
 
