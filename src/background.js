@@ -159,6 +159,7 @@ function getFocused() {
 }
 
 async function place(positionNumber) {
+  await getDisplays();
   w = await getFocused();
   console.log(w);
 
