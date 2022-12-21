@@ -12,3 +12,6 @@ This design borrows heavily from the user interface of [Amethyst for OS-X](https
 
 # Packing for Chrome web store
 cd src && zip -r dist.zip ./
+
+- Chrome extension Dev console: https://chrome.google.com/webstore/devconsole/
+- Uploaded extension public page: https://chrome.google.com/webstore/detail/window-shortcut-placer-fo/hcbbigdopjopjofpnpojicpkncepklli
