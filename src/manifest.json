@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Window shortcut placer for Chrome OS",
   "description": "Window shortcut placer for Chrome OS",
-  "version": "0.4",
+  "version": "0.5",
   "icons": {"128": "icon.png"},
 
   "permissions": [
@@ -15,12 +15,12 @@
   },
 
   "background" : {
-    "service_worker": "background.js"
+    "service_worker": "background2.js"
   },
 
   "commands": {
-    "99001-place-1":        { "description": "1" },
-    "99002-place-2":        { "description": "2"},
+    "99001-place-1":        {"description": "1" },
+    "99002-place-2":        {"description": "2"},
     "99003-place-3":        {"description": "3"},
     "99004-place-4":        {"description": "4"},
     "99005-place-5":        {"description": "5"},

@@ -5,7 +5,7 @@ try {
 }
 
 
-const WINTYPES = {"windowTypes": Object.values(chrome.windows.WindowType)};
+const WINTYPES = { "windowTypes": Object.values(chrome.windows.WindowType) };
 
 let allDisplays = new Array();
 class Display {
@@ -56,20 +56,20 @@ class Display {
         // Check which display a window is on by each corner in turn
         return (
             ( // top left
-                (win.left >= this.area.left && win.left < this.area.left+this.area.width) &&
-                (win.top >= this.area.top && win.top < this.area.top+this.area.height)
+                (win.left >= this.area.left && win.left < this.area.left + this.area.width) &&
+                (win.top >= this.area.top && win.top < this.area.top + this.area.height)
             ) ||
             ( // top right
-                (win.left+win.width >= this.area.left && win.left < this.area.left+this.area.width) &&
-                (win.top >= this.area.top && win.top < this.area.top+this.area.height)
+                (win.left + win.width >= this.area.left && win.left < this.area.left + this.area.width) &&
+                (win.top >= this.area.top && win.top < this.area.top + this.area.height)
             ) ||
             ( // bottom left
-                (win.left >= this.area.left && win.left < this.area.left+this.area.width) &&
-                (win.top+win.height >= this.area.top && win.top < this.area.top+this.area.height)
+                (win.left >= this.area.left && win.left < this.area.left + this.area.width) &&
+                (win.top + win.height >= this.area.top && win.top < this.area.top + this.area.height)
             ) ||
             ( // bottom right
-                (win.left+win.width >= this.area.left && win.left < this.area.left+this.area.width) &&
-                (win.top+win.height >= this.area.top && win.top < this.area.top+this.area.height)
+                (win.left + win.width >= this.area.left && win.left < this.area.left + this.area.width) &&
+                (win.top + win.height >= this.area.top && win.top < this.area.top + this.area.height)
             )
         );
     }
@@ -106,10 +106,10 @@ function tileDisplayWindows(display, margin) {
 
 function tileWindows() {
     return new Promise((resolve, reject) => {
-        getSettings({"margin": 2}).then(settings => {
+        getSettings({ "margin": 2 }).then(settings => {
             let margin = parseInt(settings.margin);
             Promise.all(
-                 allDisplays.map(display => { tileDisplayWindows(display, margin) })
+                allDisplays.map(display => { tileDisplayWindows(display, margin) })
             ).then(resolve);
         });
     });
@@ -122,7 +122,7 @@ function debounce(callback, wait, context = this) {
 
     const later = () => callback.apply(context, callbackArgs);
 
-    return function() {
+    return function () {
         callbackArgs = arguments;
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
@@ -151,12 +151,12 @@ function getDisplays() {
 function getDisplays2() {
     allDisplays = new Array();
     chrome.system.display.getInfo(displayInfo => {
-            console.log("Display Info", displayInfo);
+        console.log("Display Info", displayInfo);
 
-            if (displayInfo.length == 0)
-                reject("Zero displays");
+        if (displayInfo.length == 0)
+            reject("Zero displays");
 
-            displayInfo.forEach(d => allDisplays.push(new Display(d)));
+        displayInfo.forEach(d => allDisplays.push(new Display(d)));
     });
 
 }
@@ -165,57 +165,57 @@ function getFocused() {
     return new Promise(resolve => {
         chrome.windows.getLastFocused(WINTYPES, win => {
             Display.findByWinId(win.id, allDisplays).then(disp => {
-                resolve({"win": win, "disp": disp})
+                resolve({ "win": win, "disp": disp })
             });
         });
     });
 }
 
 async function place(positionNumber) {
-  getDisplays2();
-  w = await getFocused();
-  console.log(w);
+    getDisplays2();
+    w = await getFocused();
+    console.log(w);
 
-  let left = 0;
-  let top = 0;
-  let width = w.disp.area.width;
-  let height = w.disp.area.height;
+    let left = 0;
+    let top = 0;
+    let width = w.disp.area.width;
+    let height = w.disp.area.height;
 
-  if ([1,4,7,3,6,9].includes(positionNumber)) {
-    width = width / 2;
-  }
-  if ([3,6,9].includes(positionNumber)) {
-    left = width;
-  }
-  if ([7,8,9,1,2,3].includes(positionNumber)) {
-    height = height / 2;
-  }
-  if ([1,2,3].includes(positionNumber)) {
-    top = height;
-  }
-  chrome.windows.update(w.win.id, {'top': top, 'left': left, 'width': width, 'height': height, state: "normal"});
-  chrome.windows.update(w.win.id, {'top': top, 'left': left, 'width': width, 'height': height, state: "normal"});
+    if ([1, 4, 7, 3, 6, 9].includes(positionNumber)) {
+        width = width / 2;
+    }
+    if ([3, 6, 9].includes(positionNumber)) {
+        left = width;
+    }
+    if ([7, 8, 9, 1, 2, 3].includes(positionNumber)) {
+        height = height / 2;
+    }
+    if ([1, 2, 3].includes(positionNumber)) {
+        top = height;
+    }
+    chrome.windows.update(w.win.id, { 'top': top, 'left': left, 'width': width, 'height': height, state: "normal" });
+    chrome.windows.update(w.win.id, { 'top': top, 'left': left, 'width': width, 'height': height, state: "normal" });
 }
 
 // By default we set enabled true only for Chromebooks™, but this
 // can be overridden in the settings.tileWindows
 isChromebook().then(isCrOs => {
-    getSettings({"enabled": isCrOs}).then(settings => {
+    getSettings({ "enabled": isCrOs }).then(settings => {
         if (settings.enabled) {
             getDisplays().then(tileWindows, reason => console.error(reason));
 
-            chrome.commands.onCommand.addListener(function(command) {
+            chrome.commands.onCommand.addListener(function (command) {
                 console.log(command);
                 const commands = new Map([
-                    ["99001-place-1",            () => place(1)                         ],
-                    ["99002-place-2",           () => place(2)                         ],
-                    ["99003-place-3",         () => place(3)                         ],
-                    ["99004-place-4",        () => place(4)                         ],
-                    ["99005-place-5",        () => place(5)                         ],
-                    ["99006-place-6",        () => place(6)                         ],
-                    ["99007-place-7",        () => place(7)                         ],
-                    ["99008-place-8",        () => place(8)                         ],
-                    ["99009-place-9",        () => place(9)                         ]
+                    ["99001-place-1", () => place(1)],
+                    ["99002-place-2", () => place(2)],
+                    ["99003-place-3", () => place(3)],
+                    ["99004-place-4", () => place(4)],
+                    ["99005-place-5", () => place(5)],
+                    ["99006-place-6", () => place(6)],
+                    ["99007-place-7", () => place(7)],
+                    ["99008-place-8", () => place(8)],
+                    ["99009-place-9", () => place(9)]
                 ]);
                 if (commands.has(command)) commands.get(command)();
             })
@@ -227,6 +227,8 @@ isChromebook().then(isCrOs => {
 
 // Events sent by options page
 chrome.runtime.onMessage.addListener(debounce(request => {
+    console.log("reloaded");
+    console.log(request);
     if (request.hasOwnProperty("enabled")) {
         chrome.runtime.reload()
     }
