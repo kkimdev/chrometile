@@ -34,8 +34,8 @@ async function getDisplay(window) {
     let minDistanceWindow = undefined
 
     for (const displayInfo of displayInfos) {
-        const distance = computeDistance(windowCenter, computeCenter(displayInfo.bounds));
-        // console.log('displayCenter', computeCenter(displayInfo.bounds));
+        const distance = computeDistance(windowCenter, computeCenter(displayInfo.workArea));
+        // console.log('displayCenter', computeCenter(displayInfo.workArea));
         // console.log('distance', distance);
         if (distance < minDistance) {
             minDistance = distance;
@@ -49,20 +49,21 @@ async function getDisplay(window) {
 async function place(positionNumber) {
     const focusedWindow = await chrome.windows.getLastFocused();
     const display = await getDisplay(focusedWindow);
+    const displayWorkArea = display.workArea;
 
-    let left = display.bounds.left;
-    let top = display.bounds.top;
-    let width = display.bounds.width;
-    let height = display.bounds.height;
+    let left = displayWorkArea.left;
+    let top = displayWorkArea.top;
+    let width = displayWorkArea.width;
+    let height = displayWorkArea.height;
 
     if ([3, 6, 9].includes(positionNumber))
-        left += display.bounds.width / 2;
+        left += displayWorkArea.width / 2;
     if ([1, 2, 3].includes(positionNumber))
-        top += display.bounds.height / 2;
+        top += displayWorkArea.height / 2;
     if ([1, 4, 7, 3, 6, 9].includes(positionNumber))
-        width = display.bounds.width / 2;
+        width = displayWorkArea.width / 2;
     if ([7, 8, 9, 1, 2, 3].includes(positionNumber))
-        height = display.bounds.height / 2;
+        height = displayWorkArea.height / 2;
     
     const placingBounds = { 'top': top, 'left': left, 'width': width, 'height': height, state: "normal" };
     console.log(`Placing window ${focusedWindow.id} to ${JSON.stringify(placingBounds)}`);
