@@ -22,9 +22,9 @@
     "99001-place-1":        {"description": "1"},
     "99002-place-2":        {"description": "2"},
     "99003-place-3":        {"description": "3"},
-    "99004-place-4":        {"description": "4", "suggested_key": { "chromeos": "Alt+A"}},
-    "99005-place-5":        {"description": "5", "suggested_key": { "chromeos": "Alt+S"}},
-    "99006-place-6":        {"description": "6", "suggested_key": { "chromeos": "Alt+D"}},
+    "99004-place-4":        {"description": "4", "suggested_key": "Alt+A"},
+    "99005-place-5":        {"description": "5", "suggested_key": "Alt+S"},
+    "99006-place-6":        {"description": "6", "suggested_key": "Alt+D"},
     "99007-place-7":        {"description": "7"},
     "99008-place-8":        {"description": "8"},
     "99009-place-9":        {"description": "9"}
